@@ -1,5 +1,5 @@
 body {
-    width:1600px;
+    width: 1400px;
     margin: 0 auto;
 }
 
@@ -13,9 +13,14 @@ button {
     text-decoration: none;
 }
 
-.btn:hover {
+button:hover {
     background: #3cb0fd linear-gradient(to bottom, #3cb0fd, #3498db);
     text-decoration: none;
+}
+
+h1 {
+    background: #FF7400;
+    color: #0D3184;
 }
 
 #map {
@@ -26,7 +31,7 @@ button {
 
 #drone_list {
     float: left;
-    width: 200px;
+    width: 150px;
     margin-top: 10px;
 }
 
