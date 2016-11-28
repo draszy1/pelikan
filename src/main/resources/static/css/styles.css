@@ -1,0 +1,49 @@
+body {
+    width:1600px;
+    margin: 0 auto;
+}
+
+button {
+    border-radius: 8px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 20px;
+    background: #3498db;
+    padding: 11px 20px 10px 20px;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background: #3cb0fd linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+}
+
+#map {
+    margin: 10px;
+    width: 900px;
+    float: left;
+}
+
+#drone_list {
+    float: left;
+    width: 200px;
+    margin-top: 10px;
+}
+
+#buttons {
+    float: left;
+    width: 200px;
+    margin-top: 10px;
+}
+
+
+.list_item {
+    background: #FFAA00;
+    height: 40px;
+    margin-bottom: 2px;
+    color: #0D3184;
+}
+
+.list_item:hover {
+    background: #FFCB63;
+}
