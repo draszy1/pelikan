@@ -36,4 +36,13 @@ public class AirspaceController {
 
         return ResponseEntity.ok().build();
     }
+
+    @RequestMapping(value = "/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Point> get() {
+        Position position = new Position(10, 10);
+
+        Point point = new Point(position);
+
+        return ResponseEntity.ok(point);
+    }
 }
