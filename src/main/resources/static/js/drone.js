@@ -13,8 +13,8 @@ $(function () {
             success: function( data, textStatus, jQxhr ){
                 $.each(data, function(i, item){
                     $('#drone_list').append('<div class=\"list_item\">' + item.id + '</div>');
-                    showOnMap(item);
                 });
+                showOnMap(data);
             },
             error: function( jqXhr, textStatus, errorThrown ){
                 console.log( errorThrown );

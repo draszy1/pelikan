@@ -5,7 +5,7 @@ $(function () {
 
         //iterate through array...
         for( var i = 0 ; i < drones.length ; i++){
-            var item = datas[i];                                     //get item
+            var item = drones[i];                                     //get item
             var lon = item.lastPosition.coordinates.values[0];
             var lat = item.lastPosition.coordinates.values[1];
             var iconPath = 'img/dron.png';
