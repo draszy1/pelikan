@@ -1,5 +1,49 @@
 $(function () {
 
+    function showOnMap(drones) {
+        var features = [];
+
+        //iterate through array...
+        for( var i = 0 ; i < drones.length ; i++){
+            var item = datas[i];                                     //get item
+            var lon = item.lastPosition.coordinates.values[0];
+            var lat = item.lastPosition.coordinates.values[1];
+            var iconPath = 'img/dron.png';
+
+            //create Feature... with coordinates
+            var iconFeature = new ol.Feature({
+                geometry: new ol.geom.Point(ol.proj.transform([lon, lat], 'EPSG:4326',
+                    'EPSG:3857'))
+            });
+
+            //create style for your feature...
+            var iconStyle = new ol.style.Style({
+                image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                    anchor: [0.5, 46],
+                    anchorXUnits: 'fraction',
+                    anchorYUnits: 'pixels',
+                    opacity: 0.75,
+                    src: iconPath
+                }))
+            });
+
+            iconFeature.setStyle(iconStyle);
+            features.push(iconFeature);
+            //next item...
+        }
+
+
+        var vectorSource = new ol.source.Vector({
+            features: features
+        });
+
+        var vectorLayer = new ol.layer.Vector({
+            source: vectorSource
+        });
+
+        olMap.addLayer(vectorLayer);
+    }
+
     var olMap = new ol.Map({
         target: 'map',
         layers: [
@@ -13,27 +57,6 @@ $(function () {
         })
     });
 
-    var imageStyle = new ol.style.Style({
-        image: new ol.style.Circle({
-            radius: 15,
-            snapToPixel: false,
-            fill: new ol.style.Fill({color: 'yellow'}),
-            stroke: new ol.style.Stroke({color: 'red', width: 1})
-        })
-    });
 
-    // var temp = {
-    //     'type': 'Feature',
-    //     'geometry': {
-    //         'type': 'Point',
-    //         'coordinates': [-6e6, -4e6]
-    //     }
-    // };
-
-    // var flightsLayer = new ol.layer.Vector({
-    //     source: flightsSource
-    // });
-
-    // olMap.addLayer(flightsLayer);
-    // olMap.render();
+    window.showOnMap = showOnMap;
 });
