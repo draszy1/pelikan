@@ -12,8 +12,8 @@ $(function () {
 
             //create Feature... with coordinates
             var iconFeature = new ol.Feature({
-                geometry: new ol.geom.Point(ol.proj.transform([lon, lat], 'EPSG:4326',
-                    'EPSG:3857'))
+                geometry: new ol.geom.Point(ol.proj.transform([lon, lat], 'EPSG:4326', 'EPSG:3857')),
+                name: item.id
             });
 
             //create style for your feature...
@@ -55,6 +55,32 @@ $(function () {
             center: ol.proj.fromLonLat([37.41, 8.82]),
             zoom: 4
         })
+    });
+
+    var popupElement = $('#popup');
+
+    var popup = new ol.Overlay({
+        element: popupElement[0],
+        positioning: 'bottom-center',
+        stopEvent: false,
+        offset: [0, -50]
+    });
+
+    olMap.addOverlay(popup);
+
+    // display popup on click
+    olMap.on('click', function(evt) {
+        var feature = olMap.forEachFeatureAtPixel(evt.pixel,
+            function(feature) {
+                return feature;
+            });
+        if (feature) {
+            var coordinates = feature.getGeometry().getCoordinates();
+            popup.setPosition(coordinates);
+            $(popupElement).html(feature.get('name'));
+        } else {
+            //??
+        }
     });
 
 

@@ -41,6 +41,7 @@ h1 {
     margin: 10px;
     width: 900px;
     float: left;
+    position: relative;
 }
 
 #drone_list {
