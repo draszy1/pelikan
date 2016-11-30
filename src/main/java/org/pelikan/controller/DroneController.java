@@ -47,19 +47,30 @@ public class DroneController {
 
 
     private void simlulate() throws Exception{
-        Drone drone = new Drone();
-        drone.setId("ZZZ1");
-        double startLon = 17.0;
-        double startLat = 50.0;
+        droneRepository.deleteAll();
+
+        Drone drone1 = new Drone();
+        drone1.setId("ZZZ1");
+        double startLon1 = 17.0;
+        double startLat1 = 50.0;
+
+        Drone drone2 = new Drone();
+        drone2.setId("ZZZ2");
+        double startLon2 = 19.0;
+        double startLat2 = 53.0;
 
         for (int i = 0; i < 20; i++) {
             TimeUnit.SECONDS.sleep(2);
-            drone.setLastPosition(new DronePos(startLon, startLat));
+            drone1.setLastPosition(new DronePos(startLon1, startLat1));
+            drone2.setLastPosition(new DronePos(startLon2, startLat2));
 
-            startLat += 0.2;
-            startLon += 0.2;
+            startLat1 += 0.2;
+            startLon1 += 0.2;
+            startLat2 += 0.2;
+            startLon2 += 0.2;
 
-            droneRepository.save(drone);
+            droneRepository.save(drone1);
+            droneRepository.save(drone2);
         }
     }
 }

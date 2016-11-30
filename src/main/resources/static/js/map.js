@@ -18,22 +18,32 @@ $(function () {
                 name: item.id
             });
 
-            //create style for your feature...
-            var iconStyle = new ol.style.Style({
-                image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-                    anchor: [0.5, 46],
-                    anchorXUnits: 'fraction',
-                    anchorYUnits: 'pixels',
-                    opacity: 0.75,
-                    src: iconPath
-                }))
-            });
+            iconStyle = [
+                new ol.style.Style({
+                    image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                        anchor: [0.5, 1],
+                        anchorXUnits: 'fraction',
+                        anchorYUnits: 'pixels',
+                        src: iconPath,
+                        opacity: 0.75
+                    }))
+                }),
+                new ol.style.Style({
+                    text: new ol.style.Text({
+                        text: item.id,
+                        offsetY: -5,
+                        fill: new ol.style.Fill({
+                            color: '#0000FF'
+                        })
+                    })
+                })
+            ];
 
             iconFeature.setStyle(iconStyle);
+
             features.push(iconFeature);
             //next item...
         }
-
 
         var vectorSource = new ol.source.Vector({
             features: features
@@ -61,34 +71,10 @@ $(function () {
         ],
         view: new ol.View({
             center: ol.proj.transform([19.32, 52.09], 'EPSG:4326', 'EPSG:3857'),
-            zoom: 6
+            zoom: 6,
+            minZoom: 1,
+            maxZoom: 12
         })
-    });
-
-    var popupElement = $('#popup');
-
-    var popup = new ol.Overlay({
-        element: popupElement[0],
-        positioning: 'bottom-center',
-        stopEvent: false,
-        offset: [0, -50]
-    });
-
-    olMap.addOverlay(popup);
-
-    // display popup on click
-    olMap.on('click', function(evt) {
-        var feature = olMap.forEachFeatureAtPixel(evt.pixel,
-            function(feature) {
-                return feature;
-            });
-        if (feature) {
-            var coordinates = feature.getGeometry().getCoordinates();
-            popup.setPosition(coordinates);
-            $(popupElement).html(feature.get('name'));
-        } else {
-            //??
-        }
     });
 
 
