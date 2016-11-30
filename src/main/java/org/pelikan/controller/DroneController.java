@@ -22,9 +22,9 @@ public class DroneController {
 
     @RequestMapping(value = "/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<Drone>> get() {
-        Drone d1 = buildDroneDetails("AAA1", 10, 10);
-        Drone d2 = buildDroneDetails("BBB2", 20, 20);
-        Drone d3 = buildDroneDetails("CCC3", 30, 30);
+        Drone d1 = buildDroneDetails("AAA1", 17, 50);
+        Drone d2 = buildDroneDetails("BBB2", 22, 54);
+        Drone d3 = buildDroneDetails("CCC3", 19, 53);
 
         return ResponseEntity.ok(Arrays.asList(d1, d2, d3));
     }

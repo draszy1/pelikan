@@ -2,6 +2,8 @@
  * Created by draszy1 on 28.11.2016.
  */
 $(function () {
+    var allDronesIds = [];
+
     $("#retrieveDronesBtn").on('click', function (e) {
         e.preventDefault();
         $.ajax({
@@ -12,7 +14,10 @@ $(function () {
             dataType: 'json',
             success: function( data, textStatus, jQxhr ){
                 $.each(data, function(i, item){
-                    $('#drone_list').append('<div class=\"list_item\">' + item.id + '</div>');
+                    if ($.inArray(item.id, allDronesIds) === -1) {
+                        allDronesIds.push(item.id);
+                        $('#drone_list').append('<div class=\"list_item\">' + item.id + '</div>');
+                    }
                 });
                 showOnMap(data);
             },

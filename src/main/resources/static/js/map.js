@@ -52,8 +52,8 @@ $(function () {
             })
         ],
         view: new ol.View({
-            center: ol.proj.fromLonLat([37.41, 8.82]),
-            zoom: 4
+            center: ol.proj.transform([19.32, 52.09], 'EPSG:4326', 'EPSG:3857'),
+            zoom: 6
         })
     });
 
