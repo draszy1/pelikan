@@ -4,8 +4,9 @@
 $(function () {
     var allDronesIds = [];
 
-    $("#retrieveDronesBtn").on('click', function (e) {
-        e.preventDefault();
+    setInterval(retrieveDrones, 2000);
+
+    function retrieveDrones() {
         $.ajax({
             url: 'drone/get',
             dataType: 'text',
@@ -25,5 +26,11 @@ $(function () {
                 console.log( errorThrown );
             }
         });
+    }
+
+
+    $("#retrieveDronesBtn").on('click', function (e) {
+        e.preventDefault();
+        retrieveDrones();
     })
 });
