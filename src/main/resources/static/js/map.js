@@ -1,13 +1,15 @@
 $(function () {
 
+    var prevDroneLayer;
+
     function showOnMap(drones) {
         var features = [];
 
         //iterate through array...
         for( var i = 0 ; i < drones.length ; i++){
-            var item = drones[i];                                     //get item
-            var lon = item.lastPosition.coordinates.values[0];
-            var lat = item.lastPosition.coordinates.values[1];
+            var item = drones[i];
+            var lon = item.lastPosition.lon;
+            var lat = item.lastPosition.lat;
             var iconPath = 'img/dron.png';
 
             //create Feature... with coordinates
@@ -41,7 +43,13 @@ $(function () {
             source: vectorSource
         });
 
+
+        if (typeof(prevDroneLayer) !== 'undefined') {
+            olMap.removeLayer(prevDroneLayer);
+        }
+
         olMap.addLayer(vectorLayer);
+        prevDroneLayer = vectorLayer
     }
 
     var olMap = new ol.Map({

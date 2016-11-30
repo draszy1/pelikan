@@ -1,8 +1,8 @@
 package org.pelikan.model;
 
-import com.mongodb.client.model.geojson.Point;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,9 +12,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Drone {
 
     @Id
     String id;
-    Point lastPosition;
+    DronePos lastPosition;
 }
