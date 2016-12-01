@@ -2,7 +2,7 @@ $(function () {
 
     var prevDroneLayer;
 
-    function showOnMap(drones) {
+    function showDroneOnMap(drones) {
         var features = [];
 
         //iterate through array...
@@ -45,12 +45,12 @@ $(function () {
             //next item...
         }
 
-        var vectorSource = new ol.source.Vector({
+        var droneLayerSource = new ol.source.Vector({
             features: features
         });
 
-        var vectorLayer = new ol.layer.Vector({
-            source: vectorSource
+        var droneLayer = new ol.layer.Vector({
+            source: droneLayerSource
         });
 
 
@@ -58,9 +58,46 @@ $(function () {
             olMap.removeLayer(prevDroneLayer);
         }
 
-        olMap.addLayer(vectorLayer);
-        prevDroneLayer = vectorLayer
+        olMap.addLayer(droneLayer);
+        prevDroneLayer = droneLayer;
     }
+
+    function showAirspaceOnMap(airspace) {
+        var features = [];
+
+        var circle = new ol.style.Circle({
+            radius: 25,
+            fill: new ol.style.Fill({
+                color: 'rgba(0, 0, 255, 0.1)'
+            }),
+            stroke: new ol.style.Stroke({color: 'red', width: 1})
+        });
+
+        var circleStyle = new ol.style.Style ({
+            image:circle
+        });
+
+        //create Feature... with coordinates
+        var airspaceFeature = new ol.Feature({
+            geometry: new ol.geom.Point(ol.proj.transform([airspace.centerLon, airspace.centerLat], 'EPSG:4326', 'EPSG:3857')),
+            name: airspace.userId
+        });
+
+        airspaceFeature.setStyle(circleStyle);
+
+        features.push(airspaceFeature);
+
+        var airspaceLayerSource = new ol.source.Vector({
+            features: features
+        });
+
+        var airspaceLayer = new ol.layer.Vector({
+            source: airspaceLayerSource,
+        });
+
+        olMap.addLayer(airspaceLayer);
+    }
+
 
     var olMap = new ol.Map({
         target: 'map',
@@ -78,5 +115,6 @@ $(function () {
     });
 
 
-    window.showOnMap = showOnMap;
+    window.showDroneOnMap = showDroneOnMap;
+    window.showAirspaceOnMap = showAirspaceOnMap;
 });

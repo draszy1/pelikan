@@ -1,9 +1,6 @@
 package org.pelikan.controller;
 
-import com.mongodb.client.model.geojson.Point;
-import com.mongodb.client.model.geojson.Position;
 import org.pelikan.model.Airspace;
-import org.pelikan.model.AirspaceData;
 import org.pelikan.repository.AirspaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -28,21 +25,17 @@ public class AirspaceController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<?> add(@RequestBody AirspaceData data) {
-        Position position = new Position(data.getLon(), data.getLat());
+    ResponseEntity<?> add(@RequestBody Airspace airspace) {
 
-        Point point = new Point(position);
-        airspaceRepository.save(new Airspace(data.getUserId(), point));
+        airspaceRepository.save(airspace);
 
         return ResponseEntity.ok().build();
     }
 
     @RequestMapping(value = "/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<Point> get() {
-        Position position = new Position(10, 10);
+    ResponseEntity<Airspace> get() {
+        Airspace airspace = airspaceRepository.findAll().get(0);
 
-        Point point = new Point(position);
-
-        return ResponseEntity.ok(point);
+        return ResponseEntity.ok(airspace);
     }
 }
