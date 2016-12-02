@@ -68,16 +68,27 @@ $(function () {
         for( var i = 0 ; i < airspaces.length ; i++) {
             var airspace = airspaces[i];
 
-            var polyStyle = new ol.style.Style({
-                stroke: new ol.style.Stroke({
-                    color: 'blue',
-                    lineDash: [4],
-                    width: 3
+            var polyStyle = [
+                new ol.style.Style({
+                    stroke: new ol.style.Stroke({
+                        color: 'blue',
+                        lineDash: [4],
+                        width: 3
+                    }),
+                    fill: new ol.style.Fill({
+                        color: 'rgba(0, 0, 255, 0.1)'
+                    })
                 }),
-                fill: new ol.style.Fill({
-                    color: 'rgba(0, 0, 255, 0.1)'
+                new ol.style.Style({
+                    text: new ol.style.Text({
+                        text: airspace.userId,
+                        offsetY: -5,
+                        fill: new ol.style.Fill({
+                            color: '#0000FF'
+                        })
+                    })
                 })
-            });
+            ];
 
             //create Feature... with coordinates
             var airspaceFeature = new ol.Feature({

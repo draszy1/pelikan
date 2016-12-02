@@ -54,7 +54,7 @@ $(function () {
             userId : "Grzyb",
             centerLon : locatedLon,
             centerLat : locatedLat,
-            radius : "100"
+            radius : "10000"
         };
 
         $.ajax({
