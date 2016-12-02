@@ -68,25 +68,27 @@ $(function () {
         for( var i = 0 ; i < airspaces.length ; i++) {
             var airspace = airspaces[i];
 
-            var circle = new ol.style.Circle({
-                radius: 25,
+            var polyStyle = new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                    color: 'blue',
+                    lineDash: [4],
+                    width: 3
+                }),
                 fill: new ol.style.Fill({
                     color: 'rgba(0, 0, 255, 0.1)'
-                }),
-                stroke: new ol.style.Stroke({color: 'red', width: 1})
-            });
-
-            var circleStyle = new ol.style.Style({
-                image: circle
+                })
             });
 
             //create Feature... with coordinates
             var airspaceFeature = new ol.Feature({
-                geometry: new ol.geom.Point(ol.proj.transform([airspace.centerLon, airspace.centerLat], 'EPSG:4326', 'EPSG:3857')),
+                geometry: new ol.geom.Circle(
+                    ol.proj.transform([airspace.centerLon, airspace.centerLat], 'EPSG:4326', 'EPSG:3857'),
+                    airspace.radius,
+                    'XY'),
                 name: airspace.userId
             });
 
-            airspaceFeature.setStyle(circleStyle);
+            airspaceFeature.setStyle(polyStyle);
 
             features.push(airspaceFeature);
 
@@ -114,7 +116,7 @@ $(function () {
             center: ol.proj.transform([19.32, 52.09], 'EPSG:4326', 'EPSG:3857'),
             zoom: 6,
             minZoom: 1,
-            maxZoom: 12
+            maxZoom: 20
         })
     });
 

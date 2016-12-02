@@ -19,7 +19,6 @@ $(function () {
         }
     }
     function savePosition(position) {
-        console.log("Located!");
         locatedLon = position.coords.longitude;
         locatedLat = position.coords.latitude;
     }
@@ -55,7 +54,7 @@ $(function () {
             userId : "Grzyb",
             centerLon : locatedLon,
             centerLat : locatedLat,
-            radius : "10"
+            radius : "100"
         };
 
         $.ajax({
