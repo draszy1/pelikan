@@ -5,6 +5,9 @@ $(function () {
 
     var locatedLon;
     var locatedLat;
+    var airspaceUsers = [];
+
+    setInterval(retrieveAirspaces, 10000);
 
     getLocation();
 
@@ -21,8 +24,32 @@ $(function () {
         locatedLat = position.coords.latitude;
     }
 
-    $("#requestAirspaceBtn").on('click', function (e) {
-        e.preventDefault();
+    function retrieveAirspaces() {
+        $.ajax({
+            url: 'airspace/get',
+            dataType: 'text',
+            type: 'GET',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function( data, textStatus, jQxhr ){
+                $.each(data, function(i, airspace){
+                    if ($.inArray(airspace.userId, airspaceUsers) === -1) {
+                        airspaceUsers.push(airspace.userId);
+                        showAirspacesOnMap(data);
+                    }
+                });
+            },
+            error: function( jqXhr, textStatus, errorThrown ){
+                console.log( errorThrown );
+            }
+        });
+    }
+
+    function requestAirspace() {
+
+        if (locatedLat === 0.0 && locatedLon === 0.0) {
+            alert('Your browser did not did not provide location.\nPlease make sure that geolocation is enabled in your browser and try again.');
+        }
 
         var airspaceDetails = {
             userId : "Grzyb",
@@ -44,23 +71,15 @@ $(function () {
                 console.log( errorThrown );
             }
         });
+    }
+
+    $("#requestAirspaceBtn").on('click', function (e) {
+        e.preventDefault();
+        requestAirspace();
     })
 
     $("#retrieveAirspaceBtn").on('click', function (e) {
         e.preventDefault();
-        $.ajax({
-            url: 'airspace/get',
-            dataType: 'text',
-            type: 'GET',
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function( data, textStatus, jQxhr ){
-                console.log(data);
-                showAirspaceOnMap(data);
-            },
-            error: function( jqXhr, textStatus, errorThrown ){
-                console.log( errorThrown );
-            }
-        });
+        retrieveAirspaces();
     })
 });

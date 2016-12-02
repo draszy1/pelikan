@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * Created by draszy1 on 28.11.2016.
  */
@@ -33,9 +35,7 @@ public class AirspaceController {
     }
 
     @RequestMapping(value = "/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<Airspace> get() {
-        Airspace airspace = airspaceRepository.findAll().get(0);
-
-        return ResponseEntity.ok(airspace);
+    ResponseEntity<List<Airspace>> get() {
+        return ResponseEntity.ok(airspaceRepository.findAll());
     }
 }

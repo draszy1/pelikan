@@ -62,38 +62,42 @@ $(function () {
         prevDroneLayer = droneLayer;
     }
 
-    function showAirspaceOnMap(airspace) {
+    function showAirspacesOnMap(airspaces) {
         var features = [];
 
-        var circle = new ol.style.Circle({
-            radius: 25,
-            fill: new ol.style.Fill({
-                color: 'rgba(0, 0, 255, 0.1)'
-            }),
-            stroke: new ol.style.Stroke({color: 'red', width: 1})
-        });
+        for( var i = 0 ; i < airspaces.length ; i++) {
+            var airspace = airspaces[i];
 
-        var circleStyle = new ol.style.Style ({
-            image:circle
-        });
+            var circle = new ol.style.Circle({
+                radius: 25,
+                fill: new ol.style.Fill({
+                    color: 'rgba(0, 0, 255, 0.1)'
+                }),
+                stroke: new ol.style.Stroke({color: 'red', width: 1})
+            });
 
-        //create Feature... with coordinates
-        var airspaceFeature = new ol.Feature({
-            geometry: new ol.geom.Point(ol.proj.transform([airspace.centerLon, airspace.centerLat], 'EPSG:4326', 'EPSG:3857')),
-            name: airspace.userId
-        });
+            var circleStyle = new ol.style.Style({
+                image: circle
+            });
 
-        airspaceFeature.setStyle(circleStyle);
+            //create Feature... with coordinates
+            var airspaceFeature = new ol.Feature({
+                geometry: new ol.geom.Point(ol.proj.transform([airspace.centerLon, airspace.centerLat], 'EPSG:4326', 'EPSG:3857')),
+                name: airspace.userId
+            });
 
-        features.push(airspaceFeature);
+            airspaceFeature.setStyle(circleStyle);
 
-        var airspaceLayerSource = new ol.source.Vector({
-            features: features
-        });
+            features.push(airspaceFeature);
 
-        var airspaceLayer = new ol.layer.Vector({
-            source: airspaceLayerSource,
-        });
+            var airspaceLayerSource = new ol.source.Vector({
+                features: features
+            });
+
+            var airspaceLayer = new ol.layer.Vector({
+                source: airspaceLayerSource,
+            });
+        }
 
         olMap.addLayer(airspaceLayer);
     }
@@ -116,5 +120,5 @@ $(function () {
 
 
     window.showDroneOnMap = showDroneOnMap;
-    window.showAirspaceOnMap = showAirspaceOnMap;
+    window.showAirspacesOnMap = showAirspacesOnMap;
 });
