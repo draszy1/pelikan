@@ -1,6 +1,13 @@
 $(function () {
 
-    var prevDroneLayer;
+    function containsLayer(arr, layerName) {
+        for (var i = 0; i < arr.getLength(); i++) {
+            if (arr.item(i).get('name') === layerName) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
     function showDroneOnMap(drones) {
         var features = [];
@@ -50,16 +57,19 @@ $(function () {
         });
 
         var droneLayer = new ol.layer.Vector({
-            source: droneLayerSource
+            source: droneLayerSource,
         });
 
+        droneLayer.set('name', 'drone');
 
-        if (typeof(prevDroneLayer) !== 'undefined') {
-            olMap.removeLayer(prevDroneLayer);
+        var droneLayerIdx = containsLayer(olMap.getLayers(), 'drone');
+
+        if (droneLayerIdx !== -1) {
+            var availLayer = olMap.getLayers().item(droneLayerIdx);
+            availLayer.setSource(droneLayerSource);
+        } else {
+            olMap.addLayer(droneLayer);
         }
-
-        olMap.addLayer(droneLayer);
-        prevDroneLayer = droneLayer;
     }
 
     function showAirspacesOnMap(airspaces) {
@@ -110,11 +120,19 @@ $(function () {
             var airspaceLayer = new ol.layer.Vector({
                 source: airspaceLayerSource,
             });
+
+            airspaceLayer.set('name', 'airspace');
         }
 
-        olMap.addLayer(airspaceLayer);
-    }
+        var airspaceLayerIdx = containsLayer(olMap.getLayers(), 'airspace');
 
+        if (airspaceLayerIdx !== -1) {
+            var availLayer = olMap.getLayers().item(airspaceLayerIdx);
+            availLayer.setSource(airspaceLayerSource);
+        } else {
+            olMap.addLayer(airspaceLayer);
+        }
+    }
 
     var olMap = new ol.Map({
         target: 'map',
