@@ -2,7 +2,7 @@ $(function () {
 
     function containsLayer(arr, layerName) {
         for (var i = 0; i < arr.getLength(); i++) {
-            if (arr.item(i).get('name') === layerName) {
+            if (arr.item(i).get("name") === layerName) {
                 return i;
             }
         }
@@ -17,11 +17,11 @@ $(function () {
             var item = drones[i];
             var lon = item.lastPosition.lon;
             var lat = item.lastPosition.lat;
-            var iconPath = 'img/dron.png';
+            var iconPath = "img/dron.png";
 
             //create Feature... with coordinates
             var iconFeature = new ol.Feature({
-                geometry: new ol.geom.Point(ol.proj.transform([lon, lat], 'EPSG:4326', 'EPSG:3857')),
+                geometry: new ol.geom.Point(ol.proj.transform([lon, lat], "EPSG:4326", "EPSG:3857")),
                 name: item.id
             });
 
@@ -29,8 +29,8 @@ $(function () {
                 new ol.style.Style({
                     image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
                         anchor: [0.5, 1],
-                        anchorXUnits: 'fraction',
-                        anchorYUnits: 'pixels',
+                        anchorXUnits: "fraction",
+                        anchorYUnits: "pixels",
                         src: iconPath,
                         opacity: 0.75
                     }))
@@ -40,7 +40,7 @@ $(function () {
                         text: item.id,
                         offsetY: -5,
                         fill: new ol.style.Fill({
-                            color: '#0000FF'
+                            color: "#0000FF"
                         })
                     })
                 })
@@ -60,9 +60,9 @@ $(function () {
             source: droneLayerSource,
         });
 
-        droneLayer.set('name', 'drone');
+        droneLayer.set("name", "drone");
 
-        var droneLayerIdx = containsLayer(olMap.getLayers(), 'drone');
+        var droneLayerIdx = containsLayer(olMap.getLayers(), "drone");
 
         if (droneLayerIdx !== -1) {
             var availLayer = olMap.getLayers().item(droneLayerIdx);
@@ -81,12 +81,12 @@ $(function () {
             var polyStyle = [
                 new ol.style.Style({
                     stroke: new ol.style.Stroke({
-                        color: 'blue',
+                        color: "blue",
                         lineDash: [4],
                         width: 3
                     }),
                     fill: new ol.style.Fill({
-                        color: 'rgba(0, 0, 255, 0.1)'
+                        color: "rgba(0, 0, 255, 0.1)"
                     })
                 }),
                 new ol.style.Style({
@@ -94,7 +94,7 @@ $(function () {
                         text: airspace.userId,
                         offsetY: -5,
                         fill: new ol.style.Fill({
-                            color: '#0000FF'
+                            color: "#0000FF"
                         })
                     })
                 })
@@ -103,9 +103,9 @@ $(function () {
             //create Feature... with coordinates
             var airspaceFeature = new ol.Feature({
                 geometry: new ol.geom.Circle(
-                    ol.proj.transform([airspace.centerLon, airspace.centerLat], 'EPSG:4326', 'EPSG:3857'),
+                    ol.proj.transform([airspace.centerLon, airspace.centerLat], "EPSG:4326", "EPSG:3857"),
                     airspace.radius,
-                    'XY'),
+                    "XY"),
                 name: airspace.userId
             });
 
@@ -121,10 +121,10 @@ $(function () {
                 source: airspaceLayerSource,
             });
 
-            airspaceLayer.set('name', 'airspace');
+            airspaceLayer.set("name", "airspace");
         }
 
-        var airspaceLayerIdx = containsLayer(olMap.getLayers(), 'airspace');
+        var airspaceLayerIdx = containsLayer(olMap.getLayers(), "airspace");
 
         if (airspaceLayerIdx !== -1) {
             var availLayer = olMap.getLayers().item(airspaceLayerIdx);
@@ -135,14 +135,14 @@ $(function () {
     }
 
     var olMap = new ol.Map({
-        target: 'map',
+        target: "map",
         layers: [
             new ol.layer.Tile({
                 source: new ol.source.OSM()
             })
         ],
         view: new ol.View({
-            center: ol.proj.transform([19.32, 52.09], 'EPSG:4326', 'EPSG:3857'),
+            center: ol.proj.transform([19.32, 52.09], "EPSG:4326", "EPSG:3857"),
             zoom: 6,
             minZoom: 1,
             maxZoom: 20

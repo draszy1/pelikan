@@ -15,7 +15,7 @@ $(function () {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(savePosition);
         } else {
-            console.log("Geolocation is not supported by this browser.");
+            alert("Geolocation is not supported by this browser.");
         }
     }
     function savePosition(position) {
@@ -25,11 +25,11 @@ $(function () {
 
     function retrieveAirspaces() {
         $.ajax({
-            url: 'airspace/get',
-            dataType: 'text',
-            type: 'GET',
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
+            url: "airspace/get",
+            dataType: "text",
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
             success: function( data, textStatus, jQxhr ){
                 $.each(data, function(i, airspace){
                     if ($.inArray(airspace.userId, airspaceUsers) === -1) {
@@ -47,7 +47,7 @@ $(function () {
     function requestAirspace() {
 
         if (locatedLat === 0.0 && locatedLon === 0.0) {
-            alert('Your browser did not did not provide location.\nPlease make sure that geolocation is enabled in your browser and try again.');
+            alert("Your browser did not did not provide location.\nPlease make sure that geolocation is enabled in your browser and try again.");
         }
 
         var airspaceDetails = {
@@ -58,10 +58,10 @@ $(function () {
         };
 
         $.ajax({
-            url: 'airspace/add',
-            type: 'POST',
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
+            url: "airspace/add",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
             data: JSON.stringify(airspaceDetails),
             success: function( data, textStatus, jQxhr ){
                 console.log( "SUCCESS" );
@@ -72,13 +72,13 @@ $(function () {
         });
     }
 
-    $("#requestAirspaceBtn").on('click', function (e) {
+    $("#requestAirspaceBtn").on("click", function (e) {
         e.preventDefault();
         requestAirspace();
-    })
+    });
 
-    $("#retrieveAirspaceBtn").on('click', function (e) {
+    $("#retrieveAirspaceBtn").on("click", function (e) {
         e.preventDefault();
         retrieveAirspaces();
-    })
+    });
 });
